@@ -3,10 +3,13 @@ import express,{NextFunction, Request,Response} from 'express'
 import mongoose from 'mongoose';
 import authRoute from './routes/authroute'
 import cors from 'cors'
-import globalerrorhandler from './controlles/errorcontroller'
+import globalerrorhandler from './controlles/User/errorcontroller'
 import { apperror } from './utils/apperror';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
+import adminroute from './routes/adminroutes'
+import productRouter from './routes/productRoutes'
+
 
 dotenv.config()
  
@@ -32,7 +35,11 @@ app.use((req, res, next) => {
 //     methods: ["GET", "POST", "PUT", "DELETE"],
 //     credentials: true, // Allow cookies
 //   };
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
+
 // middlewareas (options: cors.CorsOptions) => express.RequestHandler)({}))
 
 app.use(express.json());
@@ -45,6 +52,8 @@ app.use(express.json());
 
 //basic routes
 app.use('/api/users',authRoute)
+app.use('/api/admin',adminroute)
+app.use('/api/users',productRouter)
 
 app.use(globalerrorhandler)
 

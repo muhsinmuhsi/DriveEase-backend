@@ -1,11 +1,11 @@
 import { NextFunction, Request,  Response } from "express";
-import uservalidation from "../validation/Uservalidation";
-import User from "../models/User";
+import uservalidation from "../../validation/Uservalidation";
+import User from "../../models/User";
 import bcryptjs from 'bcryptjs'
-import catcherror from "../utils/catcherror";
-import { apperror } from "../utils/apperror";
-import { generateOtp } from "../utils/genereteOtp";
-import sendemail from "../utils/email";
+import catcherror from "../../utils/catcherror";
+import { apperror } from "../../utils/apperror";
+import { generateOtp } from "../../utils/genereteOtp";
+import sendemail from "../../utils/email";
 import  jwt  from "jsonwebtoken";
 import dotenv from 'dotenv';
 
@@ -59,10 +59,11 @@ export const register= catcherror(async (req:Request,res:Response,next:NextFunct
 
 
     const {value,error}=uservalidation.validate(req.body)
-    console.log('from regissternn',req.body);
+    console.log('from regissternn',);
     if(error){
-        return res.status(400).json({messege:'validation error '})
+        return res.status(400).json({messege:'validation error ',error:error})
     }
+    console.log('this testing register');
 
     const {username,email,password}=value
     
@@ -90,6 +91,7 @@ export const register= catcherror(async (req:Request,res:Response,next:NextFunct
 
        await newuser.save()  
 
+console.log('this from send email');
 
       try {
         await sendemail({
@@ -97,6 +99,7 @@ export const register= catcherror(async (req:Request,res:Response,next:NextFunct
           subject:"OTP for email verification",
           html:`<h1>your otp is: ${otp}</h1>`
         })
+console.log('this in nodmailer try ');
 
         createsendToken(newuser,200,res,'Registration successful')
 
@@ -190,7 +193,7 @@ export const googleAuth = catcherror(async (req: any, res: Response, next: NextF
      createsendToken(user, 201, res, "user registered successfully");
   }
 
-  return res.status(400).json({message:"User already existed"})
+  createsendToken(user,200,res,'user login successful')
   
 });
 

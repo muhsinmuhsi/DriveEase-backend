@@ -1,5 +1,5 @@
 import express from 'express'
-import { register, verifyAccount,googleAuth, Login } from '../controlles/userauth';
+import { register, verifyAccount,googleAuth, Login } from '../controlles/User/userauth';
 import { userauthmidd } from '../middlware/userauthmidd';
 
 

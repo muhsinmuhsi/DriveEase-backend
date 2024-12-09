@@ -29,6 +29,14 @@ const uservalidation = joi.object({
             'string.pattern.base': 'Password must contain only alphanumeric characters',
             'string.min': 'Password should have at least 8 characters',
             'any.required': 'Password is a required field'
+        }),
+        
+        cpassword: joi.string().min(8).required()
+        .pattern(new RegExp("^[a-zA-Z0-9]{8,30}$"))
+        .messages({
+            'string.pattern.base': 'Password must contain only alphanumeric characters',
+            'string.min': 'Password should have at least 8 characters',
+            'any.required': 'Password is a required field'
         })
 });
 
