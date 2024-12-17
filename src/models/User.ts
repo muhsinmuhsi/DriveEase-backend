@@ -14,7 +14,7 @@ export interface userschema extends Document {
     resetpassword:string;
     restpasswordOtpExpires:Date;
     created_at:Date;
-    Bookings:mongoose.Types.ObjectId;
+    Bookings:mongoose.Types.ObjectId[];
     Reviews:mongoose.Types.ObjectId;
 
 }
@@ -65,10 +65,13 @@ const userSchema=new Schema<userschema>(
         default:Date.now(),
         required:true,
     },
-    Bookings:{
+    Bookings:[
+    
+    {
         type:mongoose.Schema.Types.ObjectId,
         ref:'Bookings'
-    },
+    }
+ ],
     Reviews:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Reviews'

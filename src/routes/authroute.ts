@@ -9,6 +9,6 @@ const router=express.Router();
 router.post('/register',register)
 router.post('/veryfyacount',userauthmidd,verifyAccount)
 router.post('/googleauth',googleAuth)
-router.post('/Login',Login)
+router.post('/Login',userauthmidd,Login)
 
 export default router

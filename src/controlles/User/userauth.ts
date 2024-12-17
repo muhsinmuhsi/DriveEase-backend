@@ -8,9 +8,8 @@ import { generateOtp } from "../../utils/genereteOtp";
 import sendemail from "../../utils/email";
 import  jwt  from "jsonwebtoken";
 import dotenv from 'dotenv';
-
 import { OAuth2Client } from "google-auth-library";
-import { error } from "console";
+
 
 
 dotenv.config()
@@ -24,7 +23,6 @@ const signtoken = (id:string) => {
 
 const createsendToken=(user:any,statuscode:number,res:any,message:string)=>{
     const token=signtoken(user._id)
-    console.log('hhhhhhhhhhhh',user);
     
 
     const jwtExpireInDays = Number(process.env.JWT_EXPIRE_IN) || 7;
@@ -59,11 +57,10 @@ export const register= catcherror(async (req:Request,res:Response,next:NextFunct
 
 
     const {value,error}=uservalidation.validate(req.body)
-    console.log('from regissternn',);
     if(error){
         return res.status(400).json({messege:'validation error ',error:error})
     }
-    console.log('this testing register');
+    
 
     const {username,email,password}=value
     
@@ -99,7 +96,6 @@ console.log('this from send email');
           subject:"OTP for email verification",
           html:`<h1>your otp is: ${otp}</h1>`
         })
-console.log('this in nodmailer try ');
 
         createsendToken(newuser,200,res,'Registration successful')
 

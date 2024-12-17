@@ -13,7 +13,7 @@ export interface Booking {
   }
 
 export interface vehicleSchema extends Document{
-    id:mongoose.Types.ObjectId;
+    _id:mongoose.Types.ObjectId;
     name:string;
     type:string;
     brand:string;
