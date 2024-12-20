@@ -17,6 +17,7 @@ const razorpay=new Razorpay({
 export const payment=catcherror(async(req:Request,res:Response)=>{
     const {userId}=req.params
     const {amount,vehicleName,startDate,endDate}=req.body
+console.log('this is payment rounte',userId,amount,vehicleName,startDate,endDate);
 
     const options={
         amount:amount*100,
@@ -43,6 +44,7 @@ export const payment=catcherror(async(req:Request,res:Response)=>{
 
 export const verifyPayment=catcherror(async(req:Request,res:Response)=>{
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+console.log('this i s veryfy payment ');
 
     const hmac=crypto.createHmac('sha256',process.env.Razorpay_key_secret as string)
     hmac.update(razorpay_order_id + '|' + razorpay_payment_id);
@@ -58,6 +60,9 @@ export const verifyPayment=catcherror(async(req:Request,res:Response)=>{
     }
 
     const {userId,vehicleName,startDate,endDate,amount}=order.notes;
+
+    console.log('userid from veryfyPayment',userId);
+    
 
     const newbooking=new Bookings({
         userId,

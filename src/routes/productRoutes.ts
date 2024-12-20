@@ -1,5 +1,5 @@
 import express from 'express'
-import { allvehicles, availableVehicles, vehicleBbyId, vehicleByCategory } from '../controlles/User/produntcontroll'
+import { allvehicles, availableVehicles, bookingsById, vehicleBbyId, vehicleByCategory } from '../controlles/User/produntcontroll'
 import {userauthmidd} from '../middlware/userauthmidd'
 import { payment, verifyPayment } from '../controlles/User/paymentControll'
 const router=express.Router()
@@ -14,5 +14,6 @@ router.get('/vehicle/:id',vehicleBbyId);
 
 router.post('/vehicle/payment/:userId',payment)
 router.post('/vehicle/verifyPayment',verifyPayment)
+router.get('/mybookings/:userId',bookingsById)
 
 export default router

@@ -8,15 +8,15 @@ const carSchemajoi = Joi.object({
   pricePerDay: Joi.number().required(),
   fuelType: Joi.string().valid("Petrol", "Diesel", "Electric").required(),
   transmission: Joi.string().valid("Automatic", "Manual").required(),
-  category:Joi.string().valid("Bike","EconomyCar","Luxury").required()
-  // bookings: Joi.array()
-  //   .items(
-  //     Joi.object({
-  //       pickupDate: Joi.date().iso().required(),
-  //       dropoffDate: Joi.date().iso().required(),
-  //     })
-  //   )
-  //   .required(),
+  category:Joi.string().valid("Bike","EconomyCar","Luxury").required(),
+  bookings: Joi.array()
+    .items(
+      Joi.object({
+        pickupDate: Joi.date().iso().required(),
+        dropoffDate: Joi.date().iso().required(),
+      })
+    )
+    .default([]), 
 });
 
 export default carSchemajoi;
