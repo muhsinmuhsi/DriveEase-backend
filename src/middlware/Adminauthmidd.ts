@@ -9,7 +9,9 @@ dotenv.config()
 
 export const Adminauthmidd=catcherror(async(req:any,res:Response,next:NextFunction)=>{
     try {
-        const token = req.cookies?.token  || req.headers.authorization?.split(' ')[1];
+        const token = req.cookies?.admin_token  || req.headers.authorization?.split(' ')[1];
+        console.log(req.cookies.admin_token,'this is from adminauth');
+        
 
     if(!token){
         return next(new apperror('You are not logged in. Please log in to access this resource.', 401));

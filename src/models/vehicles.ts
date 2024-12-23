@@ -2,8 +2,8 @@ import { string } from "joi";
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface Booking {
-    pickupDate: string; // ISO date string
-    dropoffDate: string; // ISO date string
+    pickupDate: Date; // ISO date string
+    dropoffDate: Date; // ISO date string
   }
 
   interface Reviews {
@@ -30,11 +30,11 @@ export interface vehicleSchema extends Document{
 
 const BookingSchema = new Schema<Booking>({
     pickupDate: {
-      type: String,
+      type: Date,
       required: true,
     },
     dropoffDate: {
-      type: String,
+      type: Date,
       required: true,
     },
   });

@@ -6,6 +6,7 @@ import crypto from 'crypto'
 import Bookings from "../../models/Bookings";
 import vehicles from "../../models/vehicles";
 import User from "../../models/User";
+import sendEmail from "../../utils/email";
 
 dotenv.config()
 
@@ -76,6 +77,9 @@ console.log('this i s veryfy payment ');
 
     await newbooking.save();
 
+    const startDatelocal=new Date(startDate).toLocaleDateString()
+    const endDatelocal=new Date(startDate).toLocaleDateString()
+
     const vehicle:any= await vehicles.findOne({name:vehicleName})
 
     if(!vehicle){
@@ -93,6 +97,18 @@ console.log('this i s veryfy payment ');
     if(!user){
         return res.status(404).json({message:'user not found'})
     }
+
+    await sendEmail({
+        email: user.email,
+        subject: "Vehicle Booking Confirmation",
+        templateData: {
+          userName: user.name, // Replace with the user's name
+          vehicleName: vehicleName,
+          startDate: startDatelocal,
+          endDate: endDatelocal
+        }
+      });
+
 
     user?.Bookings?.push(newbooking._id)
 

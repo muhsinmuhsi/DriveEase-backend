@@ -8,6 +8,7 @@ export const userauthmidd = catcherror(async (req: any, res: Response, next: Nex
   const SECRET_KEY = process.env.JWT_SECRET as string;  
   const token = req.cookies?.token  || req.headers.authorization?.split(' ')[1];
   
+  
   if (!token) {
     return next(new apperror('You are not logged in. Please log in to access this resource.', 401));
   }

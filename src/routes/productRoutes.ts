@@ -4,7 +4,7 @@ import {userauthmidd} from '../middlware/userauthmidd'
 import { payment, verifyPayment } from '../controlles/User/paymentControll'
 const router=express.Router()
 
-// router.use(userauthmidd)
+ router.use(userauthmidd)
 router.get('/allvehicles',allvehicles)
 router.get('/vehicles/category/:categoryName',vehicleByCategory)
 router.post('/availablevehicles',availableVehicles)

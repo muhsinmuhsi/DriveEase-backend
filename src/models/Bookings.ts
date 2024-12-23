@@ -4,9 +4,9 @@ import mongoose, { Document, Schema } from "mongoose";
 export interface bookings extends Document {
     _id:mongoose.Types.ObjectId,
     userId:mongoose.Types.ObjectId,
-    vehiclename:string,
-    startDate:string,
-    endDate:string,
+    vehicleName:string,
+    startDate:Date,
+    endDate:Date,
     amount:number,
     status:boolean,
     paymentId:string,
@@ -18,15 +18,16 @@ const bookingSchema= new Schema<bookings>({
         type:Schema.Types.ObjectId,
         ref:'User'
     },
-    vehiclename:{
+    vehicleName:{
         type:String,
+        required:true
     },
     startDate:{
-        type:String,
+        type:Date,
         required:true,
     },
     endDate:{
-        type:String,
+        type:Date,
         required:true,
     },
     amount:{

@@ -47,7 +47,11 @@ export const availableVehicles = catcherror(
 
     const userPickup = new Date(pickupDate);
     const userDropOff = new Date(dropofDate);
-    console.log("kskksk", userPickup);
+
+    // Validate dates
+    if (isNaN(userPickup.getTime()) || isNaN(userDropOff.getTime())) {
+      return res.status(400).json({ message: "Invalid dates provided" });
+    }
 
     try {
       const checkAvaillity = await vehicles.aggregate([
@@ -56,7 +60,7 @@ export const availableVehicles = catcherror(
             bookings: {
               $not: {
                 $elemMatch: {
-                  $or: [
+                  $and: [
                     { pickupDate: { $lt: userDropOff } },
                     { dropoffDate: { $gt: userPickup } },
                   ],
@@ -67,7 +71,7 @@ export const availableVehicles = catcherror(
         },
       ]);
 
-      if (checkAvaillity.length == 0) {
+      if (checkAvaillity.length === 0) {
         return res
           .status(400)
           .json({ message: "Sorry, no available vehicles" });

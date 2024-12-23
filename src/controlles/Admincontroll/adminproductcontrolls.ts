@@ -3,6 +3,7 @@ import carSchemajoi from "../../validation/productvalidate";
 import vehicles from "../../models/vehicles";
 import catcherror from "../../utils/catcherror";
 import cloudinary from 'cloudinary';
+import Bookings from "../../models/Bookings";
 
 
 export const addvehicles=catcherror(async(req:any,res:Response,next:NextFunction)=>{
@@ -72,3 +73,51 @@ export const deleteVehicle=catcherror(async(req: Request, res: Response, next: N
     }
 })
 
+
+export const bookingsStats=catcherror(async(req:Request,res:Response,next:NextFunction)=>{
+    try {
+        const bookingStats=await Bookings.aggregate([
+            {
+                $group:{
+                    _id:{month:{$month:{$toDate:"$startDate"}}},
+                    totalBookings:{$sum:1},
+                    totalAmount:{$sum:"$amount"},
+                },
+            },
+            {
+               $sort:{"_id.month":1},
+            }
+        ]);
+
+        const formattedStats=bookingStats.map((stat)=>({
+            month:getMonthName(stat._id.month),
+            totalBookings:stat.totalBookings,
+            totalAmount:stat.totalAmount
+
+        }))
+
+        res.json({success:true,data:formattedStats});
+    } catch (error) {
+        console.error("Error fetching booking stats:", error);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+});
+
+
+function getMonthName(month: number): string {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    return months[month - 1];
+  }

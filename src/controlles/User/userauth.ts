@@ -5,10 +5,10 @@ import bcryptjs from 'bcryptjs'
 import catcherror from "../../utils/catcherror";
 import { apperror } from "../../utils/apperror";
 import { generateOtp } from "../../utils/genereteOtp";
-import sendemail from "../../utils/email";
 import  jwt  from "jsonwebtoken";
 import dotenv from 'dotenv';
 import { OAuth2Client } from "google-auth-library";
+import sendOtp from "../../utils/otpsend";
 
 
 
@@ -38,7 +38,7 @@ const createsendToken=(user:any,statuscode:number,res:any,message:string)=>{
       sameSite:process.env.NODE_ENV==='production'?'none':'Lax'
     };
 
-    res.cookie("token",token,cookieOptions);
+      res.cookie("token",token,cookieOptions);
 
     user.password=undefined;
     user.otp=undefined;
@@ -91,7 +91,7 @@ export const register= catcherror(async (req:Request,res:Response,next:NextFunct
 console.log('this from send email');
 
       try {
-        await sendemail({
+        await sendOtp({
           email:newuser.email,
           subject:"OTP for email verification",
           html:`<h1>your otp is: ${otp}</h1>`

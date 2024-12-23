@@ -46,7 +46,7 @@ const uploadImage = (req:any, res:Response, next:NextFunction) => {
             // Write the buffer data to the upload stream
             stream.end(req.file.buffer);
         } else {
-            next('file not uploaded')
+            next()
         }
     });
 };
