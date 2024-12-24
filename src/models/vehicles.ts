@@ -1,16 +1,16 @@
 import { string } from "joi";
 import mongoose, { Document, Schema } from "mongoose";
+import { Reviews } from "./Reviews";
 
 export interface Booking {
     pickupDate: Date; // ISO date string
     dropoffDate: Date; // ISO date string
   }
 
-  interface Reviews {
-    userId:mongoose.Types.ObjectId,
-    review:string,
-    rating:number
-  }
+  // interface Reviews {
+  //   userId:mongoose.Types.ObjectId,
+  //   content:string,
+  // }
 
 export interface vehicleSchema extends Document{
     _id:mongoose.Types.ObjectId;
@@ -24,7 +24,7 @@ export interface vehicleSchema extends Document{
     category:"Bike"|"EconomyCar"|"Luxury"
     image:string;
     bookings:Booking[];   
-    Reviews:Reviews[];
+    Reviews:mongoose.Types.ObjectId[]|null;
 
 }
 
@@ -39,19 +39,7 @@ const BookingSchema = new Schema<Booking>({
     },
   });
 
-  const ReviewSchema = new Schema<Reviews>({
-    userId:{
-      type:Schema.Types.ObjectId,
-      
-    },
-    review:{
-      type:String,
-      
-    },
-    rating:{
-      type:Number,
-    },
-  })
+  
 
 
 
@@ -98,10 +86,10 @@ const vehicleSchema=new Schema<vehicleSchema>(
         type:[BookingSchema],
         default:[]
        },
-       Reviews:{
-        type:[ReviewSchema],
-        default:[]
-       },
+       Reviews:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Reviews'
+       }],
     },
     {timestamps:true}
 )

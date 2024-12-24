@@ -4,6 +4,7 @@ import vehicles, { Booking, vehicleSchema } from "../../models/vehicles";
 import { Request, Response, NextFunction } from "express";
 import catcherror from "../../utils/catcherror";
 import User from "../../models/User";
+import Reviews from "../../models/Reviews";
 
 export const allvehicles = catcherror(
   async (req: Request, res: Response, next: NextFunction): Promise<any> => {
@@ -91,7 +92,13 @@ export const vehicleBbyId =catcherror(async (
   next: NextFunction
 ) => {
   const vehicleId = req.params.id;
-  const vehicle = await vehicles.findById(vehicleId);
+  const vehicle = await vehicles.findById(vehicleId).populate({
+    path:"Reviews",
+    populate:{
+      path:'userId',
+      select:'username'
+    }
+  });
   if (!vehicle) {
     return res.status(404).json({ message: "vehicle not found" });
   }
@@ -120,3 +127,54 @@ export const bookingsById = catcherror(async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+
+export const ReviewsAdd= catcherror(async(req:Request,res:Response,next:NextFunction)=>{
+  const {vehicleId}=req.params;
+  const {userId,content}=req.body;
+  try {
+    const vehicle=await vehicles.findById(vehicleId)
+    if(!vehicle){
+      return res.status(404).json({message:'vehicle not found'})
+    }
+
+    if(!content){
+      return res.status(400).json({message:'content is empty'})
+    }
+
+    const newReview=new Reviews ({
+      userId:userId,
+      content:content,
+    })
+
+    const user=await User.findById(userId)
+
+    if(!user){
+      return res.status(404).json({message:'user not found'})
+    }
+
+    await newReview.save()
+
+    vehicle.Reviews?.push(newReview._id)
+    await vehicle.save()
+
+    user.Reviews?.push(newReview._id)
+    await user.save()
+
+    return res.status(201).json({message:"review added successfully",review:newReview})
+
+  } catch (error) {
+    return res.status(500).json('internal server error')
+  }
+})
+
+// export const ReviewsGet=catcherror(async(req:Request,res:Response,next:NextFunction)=>{
+//   const {vehicleId}=req.params
+//   const vehicle=await vehicles.findById(vehicleId).populate('Reviews')
+//   if(!vehicle){
+//     return res.status(404).json({message:"vehicle not found"})
+//   }
+
+//   res.status(200).json({message:'reviews fetched successfully',data:vehicle})
+
+// })

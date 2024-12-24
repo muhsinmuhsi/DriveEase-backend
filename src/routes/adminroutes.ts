@@ -8,7 +8,7 @@ import { Adminauthmidd } from '../middlware/Adminauthmidd'
 
 const router=express.Router()
 router.post('/login',Login)
-// router.use(Adminauthmidd)
+router.use(Adminauthmidd)
 router.post('/addVehicle',uploadImage,addvehicles)
 router.get('/allVehicles',adminallvehicles)
 router.get('/vehicle/category/:categoryName',adminVehicleByCategory)
