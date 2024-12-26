@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import carSchemajoi from "../../validation/productvalidate";
 import vehicles from "../../models/vehicles";
 import catcherror from "../../utils/catcherror";
-import cloudinary from 'cloudinary';
 import Bookings from "../../models/Bookings";
 
 

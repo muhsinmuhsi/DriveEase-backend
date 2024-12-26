@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import catcherror from "../utils/catcherror";
 import { apperror } from "../utils/apperror";
 import  Jwt  from "jsonwebtoken";

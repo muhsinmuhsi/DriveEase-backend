@@ -1,7 +1,6 @@
 import cloudinary from 'cloudinary'
 import multer from 'multer'
-import { config } from 'dotenv'
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { NextFunction } from 'express-serve-static-core';
 
 
