@@ -7,10 +7,10 @@ import Bookings from "../../models/Bookings";
 import vehicles from "../../models/vehicles";
 import User from "../../models/User";
 import sendEmail from "../../utils/email";
-
 dotenv.config()
 
-const razorpay=new Razorpay({
+ 
+const razorpay =new Razorpay({
     key_id: process.env.Razorpay_key_id as string,
     key_secret: process.env.Razorpay_key_secret,
 })
@@ -18,7 +18,7 @@ const razorpay=new Razorpay({
 export const payment=catcherror(async(req:Request,res:Response)=>{
     const {userId}=req.params
     const {amount,vehicleName,startDate,endDate}=req.body
-console.log('this is payment rounte',userId,amount,vehicleName,startDate,endDate);
+console.log('this is payment rounte');
 
     const options={
         amount:amount*100,

@@ -29,7 +29,7 @@ const razorpay = new razorpay_1.default({
 exports.payment = (0, catcherror_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
     const { amount, vehicleName, startDate, endDate } = req.body;
-    console.log('this is payment rounte', userId, amount, vehicleName, startDate, endDate);
+    console.log('this is payment rounte');
     const options = {
         amount: amount * 100,
         currency: 'INR',
