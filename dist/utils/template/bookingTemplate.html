@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+    .email-container {
+      background-color: #0ec921;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      color: white;
+      
+    }
+    h1 {
+      color: #0b0808;
+    }
+    h2 {
+      color: #555555;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #888888;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <h1 >Booking Confirmation</h1>
+    <p>Dear {{userName}},</p>
+    <p>Thank you for booking with DRIVE EASE.</p>
+    <p>Your vehicle <strong>{{vehicleName}}</strong> has been booked from <strong>{{startDate}}</strong> to <strong>{{endDate}}</strong>.</p>
+    <p>We wish you a wonderful journey!</p>
+    <p class="footer">If you have any questions, feel free to contact us at support@driveease.com.</p>
+  </div>
+</body>
+</html>
