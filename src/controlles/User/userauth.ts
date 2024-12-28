@@ -31,11 +31,11 @@ const createsendToken=(user:any,statuscode:number,res:any,message:string)=>{
       console.warn('JWT_EXPIRE_IN is not defined. Defaulting to 7 days.');
     }
 
-    const cookieOptions={
-      expires:new Date (Date.now()+jwtExpireInDays* 24 * 60 * 60 * 1000),
-      httponly:true,
-      secure:process.env.NODE_ENV==='production',
-      sameSite:process.env.NODE_ENV==='production'?'none':'Lax'
+    const cookieOptions = {
+      expires: new Date(Date.now() + jwtExpireInDays * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'Lax',
     };
 
       res.cookie("token",token,cookieOptions);
