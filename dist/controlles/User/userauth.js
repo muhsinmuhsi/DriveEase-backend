@@ -37,9 +37,9 @@ const createsendToken = (user, statuscode, res, message) => {
     }
     const cookieOptions = {
         expires: new Date(Date.now() + jwtExpireInDays * 24 * 60 * 60 * 1000),
-        httponly: true,
+        httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'Lax'
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'Lax',
     };
     res.cookie("token", token, cookieOptions);
     user.password = undefined;

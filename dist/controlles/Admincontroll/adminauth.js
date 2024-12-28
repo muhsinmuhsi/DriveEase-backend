@@ -28,9 +28,9 @@ exports.Login = (0, catcherror_1.default)((req, res, next) => __awaiter(void 0, 
             }
             const cookieOptions = {
                 expires: new Date(Date.now() + jwtExpireInDays * 24 * 60 * 60 * 1000),
-                httponly: true,
+                httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'Lax'
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'Lax',
             };
             res.cookie("admin_token", token, cookieOptions);
             return res.status(200).json({ message: 'Admin logged successfully', token });

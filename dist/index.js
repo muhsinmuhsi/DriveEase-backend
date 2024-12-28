@@ -35,22 +35,11 @@ app.use((req, res, next) => {
     res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
     next();
 });
-//cors setup
-// const corsOptions = {
-//     origin: "http://localhost:5174", // Your client origin
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true, // Allow cookies
-//   };
 app.use((0, cors_1.default)({
-    origin: 'http://localhost:5173',
+    origin: 'https://drive-ease-frontend-xi.vercel.app',
     credentials: true,
 }));
-// middlewareas (options: cors.CorsOptions) => express.RequestHandler)({}))
 app.use(express_1.default.json());
-//global error handling
-// app.use('*',(req:Request,res:Response,next:NextFunction)=>{
-//     next(new apperror(`can't find ${req.originalUrl} on this server !`,404))
-// })
 //basic routes
 app.use('/api/users', authroute_1.default);
 app.use('/api/admin', adminroutes_1.default);

@@ -29,25 +29,14 @@ app.use((req, res, next) => {
     next();
   });
 
-//cors setup
-// const corsOptions = {
-//     origin: "http://localhost:5174", // Your client origin
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true, // Allow cookies
-//   };
+
 app.use(cors({
   origin: 'https://drive-ease-frontend-xi.vercel.app',
   credentials: true,
 }));
 
-// middlewareas (options: cors.CorsOptions) => express.RequestHandler)({}))
 
 app.use(express.json());
-
-//global error handling
-// app.use('*',(req:Request,res:Response,next:NextFunction)=>{
-//     next(new apperror(`can't find ${req.originalUrl} on this server !`,404))
-// })
 
 
 //basic routes
