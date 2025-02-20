@@ -93,12 +93,14 @@ console.log('this i s veryfy payment ');
         dropoffDate: new Date(endDate).toISOString(),
     })
 
-    await vehicle.save();
+    
 
     const user:any= await User.findOne({_id:userId})
     if(!user){
         return res.status(404).json({message:'user not found'})
     }
+    
+    await vehicle.save();
 
     await sendEmail({
         email: user.email,

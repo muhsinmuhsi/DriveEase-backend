@@ -20,7 +20,7 @@ export const getRecommendedCars = async (userId: string): Promise<string[]> => {
     const userCarMatrix: Record<string, Record<string, number>> = {};
     bookings.forEach(({ userId, carId, amount }) => {
         if (!userId || !carId) {
-            console.warn("Skipping invalid booking:", { userId, carId });
+            // console.warn("Skipping invalid booking:", { userId, carId });
             return; // Skip invalid entries
           }
 
@@ -47,18 +47,18 @@ export const getRecommendedCars = async (userId: string): Promise<string[]> => {
         : -1
     );
 
-    console.log("Users:", users);
-console.log("Cars:", cars);
-console.log("User Vectors:", userVectors);
-console.log("Target User Index:", targetUserIndex);
-console.log("User Vector for Target User:", userVectors[targetUserIndex]);
-console.log("Similarities:", similarities);
+    // console.log("Users:", users);
+// console.log("Cars:", cars);
+// console.log("User Vectors:", userVectors);
+// console.log("Target User Index:", targetUserIndex);
+// console.log("User Vector for Target User:", userVectors[targetUserIndex]);
+// console.log("Similarities:", similarities);
 
 
 let mostSimilarUserIndex = similarities.findIndex(score => score > 0);
 
 if (mostSimilarUserIndex === -1) {
-    console.warn("No strong similar user found, trying the next best.");
+    // console.warn("No strong similar user found, trying the next best.");
     mostSimilarUserIndex = similarities.indexOf(Math.max(...similarities)); // Use even if it's 0
 }
 
@@ -67,7 +67,7 @@ if (mostSimilarUserIndex === -1) {
     const recommendedCars = Object.keys(userCarMatrix[mostSimilarUser] || {}).filter(
       (car) => !userCarMatrix[userId]?.[car]
     );
-console.log('recommended cars',recommendedCars);
+// console.log('recommended cars',recommendedCars);
 
 
 
