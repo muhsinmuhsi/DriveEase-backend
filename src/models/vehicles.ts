@@ -7,11 +7,6 @@ export interface Booking {
     dropoffDate: Date; // ISO date string
   }
 
-  // interface Reviews {
-  //   userId:mongoose.Types.ObjectId,
-  //   content:string,
-  // }
-
 export interface vehicleSchema extends Document{
     _id:mongoose.Types.ObjectId;
     name:string;
@@ -38,10 +33,6 @@ const BookingSchema = new Schema<Booking>({
       required: true,
     },
   });
-
-  
-
-
 
 const vehicleSchema=new Schema<vehicleSchema>(
     {

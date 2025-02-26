@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const produntcontroll_1 = require("../controlles/User/produntcontroll");
 const paymentControll_1 = require("../controlles/User/paymentControll");
+const recemmendationController_1 = require("../controlles/User/recemmendationController");
 const router = express_1.default.Router();
 //router.use(userauthmidd)
 router.get('/allvehicles', produntcontroll_1.allvehicles);
@@ -18,4 +19,6 @@ router.post('/vehicle/verifyPayment', paymentControll_1.verifyPayment);
 router.get('/mybookings/:userId', produntcontroll_1.bookingsById);
 router.post('/Reviews/add/:vehicleId', produntcontroll_1.ReviewsAdd);
 // router.get('/Reviews/:vehicleId',ReviewsGet)
+//recommendations
+router.get('/recommendations/:userId', recemmendationController_1.recommendationControl);
 exports.default = router;

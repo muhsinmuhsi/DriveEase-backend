@@ -24,9 +24,6 @@ export const addvehicles=catcherror(async(req:any,res:Response,next:NextFunction
       category:vehicle.category
     })
 
-    
-    
-
     await newvehicle.save()
     return res.status(200).json({message:'product added successfully'})
 })

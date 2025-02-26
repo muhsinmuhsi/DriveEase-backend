@@ -25,13 +25,10 @@ export const Login=catcherror(async(req:Request,res:any,next:NextFunction)=>{
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'Lax',
     };
 
-
           res.cookie("admin_token",token,cookieOptions);
 
-    
           return res.status(200).json({ message: 'Admin logged successfully', token });
         }
-    
         res.status(401).json({ message: 'Unauthorized' });
       } catch (error) {
         next(error);

@@ -55,7 +55,9 @@ const createsendToken = (user, statuscode, res, message) => {
 };
 exports.register = (0, catcherror_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { value, error } = Uservalidation_1.default.validate(req.body);
+    console.log('this from register');
     if (error) {
+        console.log(error, 'error');
         return res.status(400).json({ messege: 'validation error ', error: error });
     }
     const { username, email, password } = value;
@@ -72,10 +74,10 @@ exports.register = (0, catcherror_1.default)((req, res, next) => __awaiter(void 
             email: email,
             password: hashedpassword,
             otp: otp,
-            otpExpires: otpexpires
+            otpExpires: otpexpires,
+            profileImg: req.cloudinaryImageUrl,
         });
         yield newuser.save();
-        console.log('this from send email');
         try {
             yield (0, otpsend_1.default)({
                 email: newuser.email,
@@ -133,7 +135,6 @@ const googleVerify = (idtoken) => __awaiter(void 0, void 0, void 0, function* ()
 exports.googleVerify = googleVerify;
 exports.googleAuth = (0, catcherror_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { idtoken } = req.body;
-    console.log('thsi is gooogle auth', idtoken);
     const { email, picture, name, sub } = yield (0, exports.googleVerify)(idtoken);
     let user = yield User_1.default.findOne({ email });
     const hashedpassword = yield bcryptjs_1.default.hash(sub, 10);
