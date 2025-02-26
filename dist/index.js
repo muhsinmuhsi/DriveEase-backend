@@ -36,7 +36,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use((0, cors_1.default)({
-    origin: 'http://localhost:5173',
+    origin: 'https://drive-ease-frontend-xi.vercel.app',
     credentials: true,
 }));
 app.use(express_1.default.json());

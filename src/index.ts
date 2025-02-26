@@ -36,8 +36,6 @@ app.use(cors({
 
 
 app.use(express.json());
-
-
 //basic routes
 app.use('/api/users',authRoute)
 app.use('/api/admin',adminroute)
