@@ -17,12 +17,6 @@ const uservalidation = joi.object({
         'any.required': 'Email is a required field'
       }),
 
-    // image: joi.string().uri().required()
-    //   .messages({
-    //     'string.empty': 'Image URL is required',
-    //     'string.uri': 'Image must be a valid URL'
-    //   }),
-
     password: joi.string().min(8).required()
         .pattern(new RegExp("^[a-zA-Z0-9]{8,30}$"))
         .messages({
@@ -31,13 +25,7 @@ const uservalidation = joi.object({
             'any.required': 'Password is a required field'
         }),
         
-        cpassword: joi.string().min(8).required()
-        .pattern(new RegExp("^[a-zA-Z0-9]{8,30}$"))
-        .messages({
-            'string.pattern.base': 'Password must contain only alphanumeric characters',
-            'string.min': 'Password should have at least 8 characters',
-            'any.required': 'Password is a required field'
-        })
+        
 });
 
 

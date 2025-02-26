@@ -17,7 +17,7 @@ const razorpay =new Razorpay({
 
 export const payment=catcherror(async(req:Request,res:Response)=>{
     const {userId}=req.params
-    const {amount,vehicleName,startDate,endDate}=req.body
+    const {amount,carId,vehicleName,startDate,endDate}=req.body
 console.log('this is payment rounte');
 
     const options={
@@ -26,6 +26,7 @@ console.log('this is payment rounte');
         receipt: `receipt_order_${Math.random().toString(36).substring(2, 15)}`,
         notes:{
             vehicleName:vehicleName,
+            carId,
             userId:userId,
             amount:amount,
             startDate:startDate,
@@ -60,7 +61,7 @@ console.log('this i s veryfy payment ');
         return res.status(400).json({message:'order not found'})
     }
 
-    const {userId,vehicleName,startDate,endDate,amount}=order.notes;
+    const {userId,carId,vehicleName,startDate,endDate,amount}=order.notes;
 
     console.log('userid from veryfyPayment',userId);
     
@@ -68,6 +69,7 @@ console.log('this i s veryfy payment ');
     const newbooking=new Bookings({
         userId,
         vehicleName,
+        carId,
         startDate:new Date(startDate),
         endDate:new Date(endDate),
         amount:amount,
@@ -91,12 +93,14 @@ console.log('this i s veryfy payment ');
         dropoffDate: new Date(endDate).toISOString(),
     })
 
-    await vehicle.save();
+    
 
     const user:any= await User.findOne({_id:userId})
     if(!user){
         return res.status(404).json({message:'user not found'})
     }
+    
+    await vehicle.save();
 
     await sendEmail({
         email: user.email,

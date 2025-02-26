@@ -53,12 +53,17 @@ const createsendToken=(user:any,statuscode:number,res:any,message:string)=>{
     });
 }
 
-export const register= catcherror(async (req:Request,res:Response,next:NextFunction):Promise<any>=>{
+export const register= catcherror(async (req:any,res:Response,next:NextFunction):Promise<any>=>{
 
 
     const {value,error}=uservalidation.validate(req.body)
+    console.log('this from register');
+    
     if(error){
+      console.log(error,'error');
+      
         return res.status(400).json({messege:'validation error ',error:error})
+        
     }
     
 
@@ -83,13 +88,13 @@ export const register= catcherror(async (req:Request,res:Response,next:NextFunct
         email:email,
         password:hashedpassword,
         otp:otp,
-        otpExpires:otpexpires
+        otpExpires:otpexpires,
+        profileImg:req.cloudinaryImageUrl,
       })
 
        await newuser.save()  
-
-console.log('this from send email');
-
+       
+   
       try {
         await sendOtp({
           email:newuser.email,
@@ -176,7 +181,6 @@ export const googleVerify = async (idtoken: string): Promise<{ email: string; pi
 
 export const googleAuth = catcherror(async (req: any, res: Response, next: NextFunction) => {
   const { idtoken } = req.body;
-  console.log('thsi is gooogle auth',idtoken)
 
   const {email,picture, name,sub }= await googleVerify(idtoken);
 

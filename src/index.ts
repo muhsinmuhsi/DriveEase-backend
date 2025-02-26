@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import authRoute from './routes/authroute'
 import cors from 'cors'
 import globalerrorhandler from './controlles/User/errorcontroller'
-import { apperror } from './utils/apperror';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
 import adminroute from './routes/adminroutes'
@@ -31,7 +30,7 @@ app.use((req, res, next) => {
 
 
 app.use(cors({
-  origin: 'https://drive-ease-frontend-xi.vercel.app',
+  origin: 'http://localhost:5173',
   credentials: true,
 }));
 
