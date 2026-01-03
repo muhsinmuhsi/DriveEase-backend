@@ -21,12 +21,16 @@ dotenv_1.default.config();
 const sendEmail = (options) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = nodemailer_1.default.createTransport({
         host: 'smtp.gmail.com',
-        port: 465,
-        secure: true, // Use SSL
+        port: 587,
+        secure: false,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
-        }
+        },
+        tls: {
+            rejectUnauthorized: false
+        },
+        connectionTimeout: 60 * 1000,
     });
     // Load and compile the template
     const templatePath = path_1.default.join(__dirname, 'template', 'bookingTemplate.html');
@@ -43,6 +47,8 @@ const sendEmail = (options) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const info = yield transporter.sendMail(mailOptions);
         console.log('Email sent successfully:', info.response);
+        yield transporter.verify();
+        console.log("SMTP connection successful");
     }
     catch (err) {
         console.error('Error while sending email:', err);

@@ -11,9 +11,11 @@ dotenv.config()
 
  
 const razorpay =new Razorpay({
-    key_id: process.env.Razorpay_key_id as string,
+    key_id: process.env.Razorpay_key_id as string ,
     key_secret: process.env.Razorpay_key_secret,
 })
+
+
 
 export const payment=catcherror(async(req:Request,res:Response)=>{
     const {userId}=req.params
