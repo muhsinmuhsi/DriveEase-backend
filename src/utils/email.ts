@@ -14,14 +14,19 @@ interface Options {
 
 const sendEmail = async (options: Options) => {
   const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
+  },
+  connectionTimeout: 60 * 1000,
+});
+
 
   // Load and compile the template
   const templatePath = path.join(__dirname, 'template', 'bookingTemplate.html');
@@ -41,6 +46,8 @@ const sendEmail = async (options: Options) => {
   try {
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent successfully:', info.response);
+    await transporter.verify();
+    console.log("SMTP connection successful");
   } catch (err: any) {
     console.error('Error while sending email:', err);
     throw new Error('Failed to send email: ' + err.message);
