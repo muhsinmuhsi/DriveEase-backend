@@ -6,7 +6,6 @@ import crypto from 'crypto'
 import Bookings from "../../models/Bookings";
 import vehicles from "../../models/vehicles";
 import User from "../../models/User";
-import sendEmail from "../../utils/email";
 dotenv.config()
 
  
@@ -104,16 +103,16 @@ console.log('this i s veryfy payment ');
     
     await vehicle.save();
 
-    await sendEmail({
-        email: user.email,
-        subject: "Vehicle Booking Confirmation",
-        templateData: {
-          userName: user.name, 
-          vehicleName: vehicleName,
-          startDate: startDatelocal,
-          endDate: endDatelocal
-        }
-      });
+    // await sendEmail({
+    //     email: user.email,
+    //     subject: "Vehicle Booking Confirmation",
+    //     templateData: {
+    //       userName: user.name, 
+    //       vehicleName: vehicleName,
+    //       startDate: startDatelocal,
+    //       endDate: endDatelocal
+    //     }
+    //   });
 
 
     user?.Bookings?.push(newbooking._id)
