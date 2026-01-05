@@ -20,39 +20,26 @@ const handlebars_1 = __importDefault(require("handlebars"));
 dotenv_1.default.config();
 const sendEmail = (options) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = nodemailer_1.default.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
+        host: process.env.BREVO_SMTP_HOST,
+        port: Number(process.env.BREVO_SMTP_PORT),
         secure: false,
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
+            user: process.env.BREVO_SMTP_USER,
+            pass: process.env.BREVO_SMTP_PASS,
         },
-        tls: {
-            rejectUnauthorized: false
-        },
-        connectionTimeout: 60 * 1000,
     });
-    // Load and compile the template
-    const templatePath = path_1.default.join(__dirname, 'template', 'bookingTemplate.html');
-    const templateSource = fs_1.default.readFileSync(templatePath, 'utf8');
+    yield transporter.verify();
+    const __dirname = path_1.default.resolve();
+    const templatePath = path_1.default.join(__dirname, "template", "bookingTemplate.html");
+    const templateSource = fs_1.default.readFileSync(templatePath, "utf8");
     const template = handlebars_1.default.compile(templateSource);
-    // Inject data into the template
     const htmlContent = template(options.templateData);
-    const mailOptions = {
-        from: `"DRIVE EASE" <${process.env.EMAIL_USER}>`,
+    yield transporter.sendMail({
+        from: `"DriveEase" <${process.env.EMAIL_FROM}>`,
         to: options.email,
         subject: options.subject,
-        html: htmlContent
-    };
-    try {
-        const info = yield transporter.sendMail(mailOptions);
-        console.log('Email sent successfully:', info.response);
-        yield transporter.verify();
-        console.log("SMTP connection successful");
-    }
-    catch (err) {
-        console.error('Error while sending email:', err);
-        throw new Error('Failed to send email: ' + err.message);
-    }
+        html: htmlContent,
+    });
+    console.log("✅ Email sent successfully");
 });
 exports.default = sendEmail;

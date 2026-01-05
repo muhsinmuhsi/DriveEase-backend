@@ -96,7 +96,7 @@ exports.verifyPayment = (0, catcherror_1.default)((req, res) => __awaiter(void 0
         email: user.email,
         subject: "Vehicle Booking Confirmation",
         templateData: {
-            userName: user.name, // Replace with the user's name
+            userName: user.name,
             vehicleName: vehicleName,
             startDate: startDatelocal,
             endDate: endDatelocal

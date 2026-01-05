@@ -108,7 +108,7 @@ console.log('this i s veryfy payment ');
         email: user.email,
         subject: "Vehicle Booking Confirmation",
         templateData: {
-          userName: user.name, // Replace with the user's name
+          userName: user.name, 
           vehicleName: vehicleName,
           startDate: startDatelocal,
           endDate: endDatelocal
