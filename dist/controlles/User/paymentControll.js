@@ -20,7 +20,6 @@ const crypto_1 = __importDefault(require("crypto"));
 const Bookings_1 = __importDefault(require("../../models/Bookings"));
 const vehicles_1 = __importDefault(require("../../models/vehicles"));
 const User_1 = __importDefault(require("../../models/User"));
-const email_1 = __importDefault(require("../../utils/email"));
 dotenv_1.default.config();
 const razorpay = new razorpay_1.default({
     key_id: process.env.Razorpay_key_id,
@@ -92,16 +91,16 @@ exports.verifyPayment = (0, catcherror_1.default)((req, res) => __awaiter(void 0
         return res.status(404).json({ message: 'user not found' });
     }
     yield vehicle.save();
-    yield (0, email_1.default)({
-        email: user.email,
-        subject: "Vehicle Booking Confirmation",
-        templateData: {
-            userName: user.name,
-            vehicleName: vehicleName,
-            startDate: startDatelocal,
-            endDate: endDatelocal
-        }
-    });
+    // await sendEmail({
+    //     email: user.email,
+    //     subject: "Vehicle Booking Confirmation",
+    //     templateData: {
+    //       userName: user.name, 
+    //       vehicleName: vehicleName,
+    //       startDate: startDatelocal,
+    //       endDate: endDatelocal
+    //     }
+    //   });
     (_b = user === null || user === void 0 ? void 0 : user.Bookings) === null || _b === void 0 ? void 0 : _b.push(newbooking._id);
     yield user.save();
     return res.status(200).json({ message: "Payment verified and booking saved successfully" });
